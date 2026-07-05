@@ -16,6 +16,10 @@ endif ()
 
 include_directories (
     src
+    widgets/dpf-imgui
+    widgets/dpf-imgui/DearImGui
+    widgets/imgui-ext
+    widgets/imgui-knobs-mod
     ${PROJECT_BINARY_DIR}
 )
 
@@ -24,4 +28,14 @@ dpf_add_plugin (${PROJECT_NAME}
     FILES_DSP
         src/ClassicChorusPlugin.cpp
         src/core/Chorus.cpp
+    FILES_UI
+        src/UI.cpp
+        src/PresetManager.cpp
+        src/ui/UIChassis.cpp
+        src/ui/UISubroutines.cpp
+        src/ui/PresetManagerWindow.cpp
+        src/ui/FileBrowserStuff.cpp
+        src/ui/MessageBoxStuff.cpp
+        widgets/dpf-imgui/DearImGui.cpp
+        widgets/imgui-knobs-mod/imgui-knobs.cpp
 )

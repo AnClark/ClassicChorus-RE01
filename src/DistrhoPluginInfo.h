@@ -18,7 +18,7 @@
 #define DISTRHO_UI_USE_CUSTOM           1
 #define DISTRHO_UI_CUSTOM_INCLUDE_PATH  "DearImGui.hpp"
 #define DISTRHO_UI_CUSTOM_WIDGET_TYPE   DGL_NAMESPACE::ImGuiTopLevelWidget
-#define DISTRHO_UI_DEFAULT_WIDTH         900 + 100 - 4  // Base width + right panel width
+#define DISTRHO_UI_DEFAULT_WIDTH         706 + 120 - 8  // Base width + right panel width
 #define DISTRHO_UI_DEFAULT_HEIGHT        120
 
 /* VST2 unique ID – must be a bare 4-character token (no quotes, no commas) */

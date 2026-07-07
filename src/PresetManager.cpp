@@ -454,38 +454,38 @@ std::string PresetManager::_getUserDataDir() const
         std::string result(static_cast<size_t>(len - 1), '\0');
         WideCharToMultiByte(CP_UTF8, 0, wpath, -1, &result[0], len, nullptr, nullptr);
         CoTaskMemFree(wpath);
-        return result + "\\" CLASSIC_FLANGER_APPDATA_DIR_NAME;
+        return result + "\\" CLASSIC_CHORUS_APPDATA_DIR_NAME;
     }
     // Fallback
     const char* appdata = getenv("APPDATA");
-    return std::string(appdata ? appdata : ".") + "\\" CLASSIC_FLANGER_APPDATA_DIR_NAME;
+    return std::string(appdata ? appdata : ".") + "\\" CLASSIC_CHORUS_APPDATA_DIR_NAME;
 #elif defined(__APPLE__)
     const char* home = getenv("HOME");
     if (!home) {
         struct passwd* pw = getpwuid(getuid());
         home = pw ? pw->pw_dir : nullptr;
     }
-    return std::string(home ? home : ".") + "/Library/Application Support/" CLASSIC_FLANGER_APPDATA_DIR_NAME;
+    return std::string(home ? home : ".") + "/Library/Application Support/" CLASSIC_CHORUS_APPDATA_DIR_NAME;
 #else
     // Linux / other POSIX
     const char* xdgData = getenv("XDG_DATA_HOME");
     if (xdgData && xdgData[0] != '\0')
-        return std::string(xdgData) + "/" CLASSIC_FLANGER_APPDATA_DIR_NAME;
+        return std::string(xdgData) + "/" CLASSIC_CHORUS_APPDATA_DIR_NAME;
     const char* home = getenv("HOME");
     if (!home) {
         struct passwd* pw = getpwuid(getuid());
         home = pw ? pw->pw_dir : nullptr;
     }
-    return std::string(home ? home : ".") + "/.local/share/" CLASSIC_FLANGER_APPDATA_DIR_NAME;
+    return std::string(home ? home : ".") + "/.local/share/" CLASSIC_CHORUS_APPDATA_DIR_NAME;
 #endif
 }
 
 std::string PresetManager::_getUserPresetsFilePath() const
 {
 #if defined(_WIN32)
-    return _getUserDataDir() + "\\" CLASSIC_FLANGER_PRESET_FILE_NAME;
+    return _getUserDataDir() + "\\" CLASSIC_CHORUS_PRESET_FILE_NAME;
 #else
-    return _getUserDataDir() + "/" CLASSIC_FLANGER_PRESET_FILE_NAME;
+    return _getUserDataDir() + "/" CLASSIC_CHORUS_PRESET_FILE_NAME;
 #endif
 }
 

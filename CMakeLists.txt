@@ -5,6 +5,9 @@ project (ClassicChorus-RE01
     LANGUAGES C CXX
 )
 
+# Explicitly specify C++ standard to deal with missing functions (e.g. std::clamp()) on macOS
+set (CMAKE_CXX_STANDARD 20)
+
 add_subdirectory (dpf)
 
 configure_file (src/config.h.in ${PROJECT_BINARY_DIR}/config.h @ONLY)

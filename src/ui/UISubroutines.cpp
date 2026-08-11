@@ -11,10 +11,12 @@
 #include "../fonts/IconFontAwesome5.h"
 #include "src/Resources.hpp"
 
+static constexpr float kScaleMarkInitFontSize = 12.5f;
+
 ImGuiKnobs_Mod::KnobScaleMarkStyle kScaleMarkStyle = {
     .outer_radius = 1.20f,
     .tick_length  = 0.50f,    
-    .font_size    = 12.5f,
+    .font_size    = kScaleMarkInitFontSize,
 };
 
 void ClassicChorusUI::_loadFonts()
@@ -75,6 +77,9 @@ void ClassicChorusUI::_loadFonts()
     // Specify a larger font for the scale marks to improve rendering quality.
     // The Knob widget will down-sample it to the specified font size (12.5px) to achieve better visual quality.
     kScaleMarkStyle.custom_font = io.Fonts->Fonts[2];
+
+    // Remember to scale the scale mark font's size to screen DPI
+    kScaleMarkStyle.font_size = kScaleMarkInitFontSize * getScaleFactor();
 }
 
 void ClassicChorusUI::_addKnob(Parameters paramId, const char* label, float v_min, float v_max, const ImGuiKnobs_Mod::KnobScaleMark *marks, uint32_t mark_count, bool isLogarithmic, bool use_pivot, float pivot_value, const char* format)
@@ -88,7 +93,7 @@ void ClassicChorusUI::_addKnob(Parameters paramId, const char* label, float v_mi
     //        internal quantization / logarithmic epsilon used while dragging, so a finer
     //        format (e.g. "%.2f") yields smaller adjustment steps for logarithmic knobs.
 
-    constexpr float KNOB_SIZE = 50.0f;
+    const float   KNOB_SIZE = SCALE(50.0f);
     constexpr int DEFAULT_STEP = 10;
 
     constexpr auto IMGUIKNOBS_PI = 3.14159265358979323846f;
@@ -138,9 +143,9 @@ void ClassicChorusUI::_addLEDIndicator(const char* label, bool isLit)
     ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[0]);
 
     ImGui::AlignTextToFramePadding();
-    ImGuiExt::LEDIndicator(label, isLit, ImVec4(1.f, 0.f, 0.f, 1.f), 4.0f);
+    ImGuiExt::LEDIndicator(label, isLit, ImVec4(1.f, 0.f, 0.f, 1.f), SCALE(4.0f));
     ImGui::SameLine();
-    ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 4.0f);    // Fix label vertical misalign
+    ImGui::SetCursorPosY(ImGui::GetCursorPosY() - SCALE(4.0f));    // Fix label vertical misalign
     ImGui::Text("%s", label);
 
     ImGui::PopFont();
@@ -150,7 +155,7 @@ void ClassicChorusUI::_addLEDIndicator(const char* label, bool isLit)
 
 void ClassicChorusUI::_addBinaryStateSwitch(Parameters paramId, const char* label, const char* state0Label, const char* state1Label, float LEDIndentWidth, float btnIndentWidth)
 {
-    ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 8.0f);   
+    ImGui::SetCursorPosY(ImGui::GetCursorPosY() - SCALE(8.0f));   
     ImGui::BeginGroup();
     
     // WORKAROUND: SameLine() leaves window->DC.IsSameLine == true.
@@ -186,7 +191,7 @@ void ClassicChorusUI::_addBinaryStateSwitch(Parameters paramId, const char* labe
 
         ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[0]);
         ImGui::PushID(paramId);
-        if (ImGuiExt::HardwareButton("SET##WaveformToggle", ImVec2(50, 16), ImVec4(0.4, 0.4, 0.4, 1.0)))
+        if (ImGuiExt::HardwareButton("SET##WaveformToggle", ImVec2(SCALE(50), SCALE(16)), ImVec4(0.4, 0.4, 0.4, 1.0)))
         {
             fParams[paramId] = fParams[paramId] >= 0.5f ? 0.0f : 1.0f;
             setParameterValue(paramId, fParams[paramId]);
@@ -217,7 +222,7 @@ bool ClassicChorusUI::_BeginSection(const char* title, float width)
     ImGui::PopStyleColor();
     ImGui::PopFont();
 
-    ImGui::Dummy(ImVec2(0.0f, 8.0f));
+    ImGui::Dummy(ImVec2(0.0f, SCALE(8.0f)));
     return true;
 }
 

@@ -2,8 +2,15 @@ cmake_minimum_required (VERSION 3.20)
 
 project (ClassicChorus-RE01
     VERSION 1.1.1
+    DESCRIPTION "Classic Chorus RE-01 audio plugin"
     LANGUAGES C CXX
 )
+
+# Metadata for CPack
+set (AUTHOR "AnClark Liu")
+set (INSTALL_DIRECTORY ${PROJECT_NAME})
+set (ICON_PATH "${PROJECT_SOURCE_DIR}/Screenshot.png")
+set (PRODUCTBUILD_IDENTIFIER "com.anclark.classicchorus.re01")
 
 # Explicitly specify C++ standard to deal with missing functions (e.g. std::clamp()) on macOS
 set (CMAKE_CXX_STANDARD 20)
@@ -11,6 +18,9 @@ set (CMAKE_CXX_STANDARD 20)
 add_subdirectory (dpf)
 
 configure_file (src/config.h.in ${PROJECT_BINARY_DIR}/config.h @ONLY)
+
+# Packaging rules
+include ("${PROJECT_SOURCE_DIR}/cmake/Packaging.cmake")
 
 option (CONFIG_BUILD_JACK_STANDALONE "Build JACK standalone format (for debugging)")
 if (CONFIG_BUILD_JACK_STANDALONE)

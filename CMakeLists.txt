@@ -36,6 +36,12 @@ include_directories (
     ${PROJECT_BINARY_DIR}
 )
 
+set (FONT_FILES
+    fonts/LiberationSans-Regular.cpp
+    fonts/CormorantFont.cpp
+    fonts/FontAwesome5.cpp
+)
+
 dpf_add_plugin (${PROJECT_NAME}
     TARGETS vst2 vst3 lv2 clap ${TARGET_JACK}
     FILES_DSP
@@ -51,4 +57,5 @@ dpf_add_plugin (${PROJECT_NAME}
         src/ui/MessageBoxStuff.cpp
         widgets/dpf-imgui/DearImGui.cpp
         widgets/imgui-knobs-mod/imgui-knobs.cpp
+        ${FONT_FILES}
 )
